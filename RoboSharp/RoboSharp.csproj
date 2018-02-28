@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationConstants.cs" />
+    <Compile Include="BuildDetails.cs" />
     <Compile Include="CopyOptions.cs" />
     <Compile Include="CopyProgressEventArgs.cs" />
     <Compile Include="Debugger.cs" />
