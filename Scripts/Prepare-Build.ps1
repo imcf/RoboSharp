@@ -5,16 +5,19 @@ Param(
 )
 
 $CsTemplate = @"
-public static class BuildDetails
+namespace RoboSharp
 {{
-    public const string GitCommitName = "{0}";
-    public const string GitBranch = "{1}";
-    public const string GitMajor = "{2}";
-    public const string GitMinor = "{3}";
-    public const string GitPatch = "{4}";
-    public const string GitTagDist = "{5}";
-    public const string BuildDate = "{6}";
-    public const string GitCommit = "{7}";
+    public static class BuildDetails
+    {{
+        public const string GitCommitName = "{0}";
+        public const string GitBranch = "{1}";
+        public const string GitMajor = "{2}";
+        public const string GitMinor = "{3}";
+        public const string GitPatch = "{4}";
+        public const string GitTagDist = "{5}";
+        public const string BuildDate = "{6}";
+        public const string GitCommit = "{7}";
+    }}
 }}
 "@
 
@@ -74,6 +77,8 @@ $ErrorActionPreference = "Stop"
 $OldLocation = Get-Location
 Set-Location $SolutionDir -ErrorAction Stop
 
+$BuildDetailsCS = "$($SolutionDir)\RoboSharp\BuildDetails.cs"
+
 try {
     $CommitName = & git describe --tags --long --match "[0-9].[0-9].[0-9]"
     if (-Not $?) { throw }
@@ -104,9 +109,6 @@ $Date = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
 # property, as this will magically be parsed and reported as "Version" when
 # examining the executable using "Get-Command AutoTx.exe | Format-List *"
 $DateShort = Get-Date -Format 'yyyy.MM.dd.HHmm'
-
-
-$BuildDetailsCS = "$($SolutionDir)\RoboSharp\BuildDetails.cs"
 
 
 Write-Output $(
